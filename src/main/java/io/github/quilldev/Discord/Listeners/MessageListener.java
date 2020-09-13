@@ -1,12 +1,14 @@
-package io.quilldev.github.Listeners;
+package io.github.quilldev.Listeners;
 
-import io.quilldev.github.BotConfig;
+import io.github.quilldev.BotConfig;
+import io.github.quilldev.Commands.CommandManager;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 
 public class MessageListener extends ListenerAdapter {
 
+    private final CommandManager commandManager = CommandManager.getInstance();
     @Override
     public void onMessageReceived(MessageReceivedEvent event){
 
@@ -14,11 +16,9 @@ public class MessageListener extends ListenerAdapter {
         String content = event.getMessage().getContentDisplay();
 
         //If the author is a bot or if the content doesn't start with the prefix just stop.
-        if(event.getAuthor().isBot() || content.startsWith(BotConfig.prefix)) return;
+        if(event.getAuthor().isBot() || !content.startsWith(BotConfig.prefix)) return;
 
-        //switch for checking command matches.
-        switch(content){
-
-        }
+        //Find the command
+        commandManager.findCommand(event);
     }
 }
