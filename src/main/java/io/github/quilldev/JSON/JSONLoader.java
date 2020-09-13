@@ -1,6 +1,6 @@
-import net.dv8tion.jda.api.JDABuilder;
+package io.quilldev.github.JSON;
+
 import org.json.JSONObject;
-import org.json.JSONStringer;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -8,29 +8,23 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-public class Tsubasa {
+public class JSONLoader {
 
-    public static void main(String[] args){
+    private Path jsonPath;
 
-        //Create a store for config
-        JSONObject config = loadConfig();
-
-        //Get the token from the config
-        String token = config.get("token").toString();
-
-        //Create a JDA builder for building the Discord API
-        JDABuilder builder = JDABuilder.createDefault(token);
+    //Constructor for JSONLoader class, gets the path from the inputted string
+    public JSONLoader(String pathString){
+        this.jsonPath = Paths.get(pathString);
     }
-
 
     /**
      * Load config from the json file
      * @return the json file
      */
-    public static JSONObject loadConfig() {
+    public JSONObject load() {
 
         //Create path for config json file
-        Path configPath = Paths.get("config.json");
+        Path configPath = jsonPath;
 
         //Wrap in try catch to get exceptions
         try {
@@ -70,7 +64,7 @@ public class Tsubasa {
      * @param list
      * @return
      */
-    public static String toJsonString(List<String> list){
+    public String toJsonString(List<String> list){
 
         //Create the string builder
         StringBuilder jsonBuilder = new StringBuilder();
